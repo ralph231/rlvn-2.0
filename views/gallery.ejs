@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLVN Photos</title>
+    <link rel="stylesheet" href="/gallrey.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="gallery-container">
+        <h1>RLVN</h1>
+
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+            <a href="/upload" class="upload-button" style="margin-left: 10px;">Upload Media</a>
+            <div class="dark-mode-toggle" onclick="toggleDarkMode()" style="margin-left: 15px;">🌙</div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="search" placeholder="Search by ID, Title, or Date" oninput="filterGallery()">
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <% media.forEach(item => { %>
+                <div class="gallery-item" data-id="<%= item._id %>" data-title="<%= item.title %>" data-date="<%= item.date %>">
+                    <% if (item.type.startsWith('image/')) { %>
+                        <% if (item.type === 'image/gif') { %>
+                            <img src="/uploads/<%= item.url %>" alt="<%= item.title %>" class="gif" onclick="openFullscreenImage('/uploads/<%= item.url %>', '<%= item.title %>', '<%= item.date %>')">
+                        <% } else if (item.isLivePhoto) { %>
+                            <img src="/uploads/<%= item.url %>" alt="<%= item.title %>" class="live-photo" onclick="openFullscreenImage('/uploads/<%= item.url %>', '<%= item.title %>', '<%= item.date %>')">
+                        <% } else { %>
+                            <img src="/uploads/<%= item.url %>" alt="<%= item.title %>" class="photo" onclick="openFullscreenImage('/uploads/<%= item.url %>', '<%= item.title %>', '<%= item.date %>')">
+                        <% } %>
+                    <% } else if (item.type.startsWith('video/')) { %>
+                        <video controls onclick="openFullscreenVideo('/uploads/<%= item.url %>', '<%= item.type %>', '<%= item.title %>', '<%= item.date %>')">
+                            <source src="/uploads/<%= item.url %>" type="<%= item.type %>">
+                            Your browser does not support the video tag.
+                        </video>
+                    <% } %>
+
+                    <form action="/delete/<%= item._id %>" method="POST" class="delete-form">
+                        <button type="submit" class="delete-button" onclick="showDeleteNotification('<%= item.title %>')">Delete</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Floating Buttons (Refresh and Keep Note) -->
+    <button class="refresh-button" onclick="refreshPage()">REF</button>
+
+    <div id="fullscreen-modal" class="fullscreen-modal" onclick="closeFullscreen()">
+        <span id="close-modal" class="close">&times;</span>
+        <img id="fullscreen-img" class="fullscreen-content" style="display: none;">
+        <video id="fullscreen-video" class="fullscreen-content" controls style="display: none;"></video>
+        <div id="fullscreen-title" class="fullscreen-title" style="display: none;"></div>
+        <a id="download-fullscreen" class="download-icon" style="display: none;" download>🐈‍⬛️</a>
+    </div>
+
+    <!-- Notification Element -->
+    <div id="delete-notification" class="notification"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; <%= new Date().getFullYear() %> Private site by RLVN. All rights reserved by RLVN.</p>
+        </div>
+    </footer>
+    <script src="/gallery.js"></script>
+</body>
+</html>

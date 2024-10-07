@@ -1,0 +1,194 @@
+/* Fullscreen Modal 3D Style */
+.fullscreen-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95));
+    backdrop-filter: blur(8px);
+    perspective: 1000px; /* Add 3D perspective */
+}
+
+.fullscreen-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg) scale(1); /* Initial 3D rotation */
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fullscreen-content:hover {
+    transform: translate(-50%, -50%) rotateX(5deg) rotateY(5deg) scale(1.05); /* 3D rotation on hover */
+    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.7);
+}
+
+/* Hover effects for a smoother and polished experience */
+.fullscreen-title {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #F4CE14;
+    font-size: 26px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    transition: color 0.3s ease;
+}
+
+.download-icon {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    cursor: pointer;
+    font-size: 32px;
+    color: #F4CE14;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.download-icon:hover {
+    color: #d4ae0b;
+    transform: scale(1.1) rotate(10deg); /* Add rotation on hover */
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    display: inline-block;
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 32px;
+    color: #333;
+    vertical-align: middle;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    color: #F4CE14;
+    transform: rotate(20deg); /* Add rotation for a fun effect */
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+    transition: background-color 1.1s ease, color 1.1s ease;
+}
+
+body.dark-mode .comments {
+    background-color: #333;
+    color: #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+body.dark-mode .gallery-item {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, red, darkred);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 2000;
+    font-weight: 600;
+    transform: scale(0.9);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.notification.show {
+    display: block;
+    transform: scale(1);
+}
+
+/* Floating Square Refresh Button */
+.refresh-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #F4CE14;
+    border: none;
+    color: #333;
+    width: 55px;
+    height: 55px;
+    font-size: 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.refresh-button:hover {
+    background-color: #d4ae0b;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px) rotate(10deg); /* Add rotation and lifting */
+}
+
+/* Search Bar Styles */
+.search-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;    
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1000;
+}
+
+.search-input {
+    padding: 12px;
+    width: 320px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #F4CE14;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.folder-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.folder {
+    width: 150px;
+    margin: 10px;
+    text-align: center;
+}
+
+.folder img {
+    width: 100px;
+    height: 100px;
+}
+
+#folder-form {
+    margin-top: 20px;
+}

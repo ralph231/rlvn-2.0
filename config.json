@@ -1,0 +1,7 @@
+{
+  "USERNAME": "yuki",
+  "PASSWORD": "041324",
+  "MONGO_URI": "mongodb+srv://natzstudios:natzstudios001@natzstudios.qhuzyjf.mongodb.net/?retryWrites=true&w=majority",
+  "SESSION_SECRET": "d26999d5d8585a83e2ffdf8a4201d7d068d9479067cdab9456473c6616cd07efef0407c7972eb4b573b645508eecd92388ddba4796c77d40ddb1b442d97ced7d"
+}
+  

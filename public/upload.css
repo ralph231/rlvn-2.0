@@ -1,0 +1,222 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.upload-container, .preview-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 48%;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Dark Mode Containers */
+body.dark-mode .upload-container, body.dark-mode .preview-container {
+    background-color: #1e1e1e;
+}
+
+.upload-container:hover, .preview-container:hover {
+    transform: scale(1.03);
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    background: linear-gradient(90deg, #171616, #626060);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #7f8c8d;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #dfe6e9;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f7f9fc;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Dark Mode Input Fields */
+body.dark-mode .form-group input {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+}
+
+.form-group input[type="file"]:focus {
+    border-color: #272626;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #171616, #626060);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(90deg, #171616, #626060);
+}
+
+/* Updated back-button to be an outlined button */
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: transparent; /* Transparent background for outline */
+    color: #626060; /* Text color */
+    border: 2px solid #626060; /* Border to create outline */
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    font-size: 16px;
+    text-decoration: none; /* Remove underline */
+}
+
+.back-button:hover {
+    background-color: #626060; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.preview-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#file-preview {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin-top: 10px;
+    border: 2px dashed #7f8c8d;
+    padding: 20px;
+    display: none;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#file-preview img, #file-preview video {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Live Preview Text */
+.preview-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.preview-date {
+    font-size: 16px;
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+
+/* Small Devices (Phones) */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .upload-container, .preview-container {
+        padding: 20px;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    button[type="submit"] {
+        font-size: 16px;
+    }
+
+    .back-button {
+        font-size: 14px;
+    }
+}
+
+/* Tablets (Landscape & Portrait) */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .upload-container, .preview-container {
+        width: 80%;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    button[type="submit"] {
+        font-size: 17px;
+    }
+}

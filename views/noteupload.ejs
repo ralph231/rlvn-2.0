@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Note</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/noteupload.css">
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="upload-container">
+            <h1>Upload Note</h1>
+
+            <!-- Dark Mode Toggle Button -->
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+            <form action="/notes" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">TITLE</label>
+                    <input type="text" name="title" id="titleInput" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">DATE</label>
+                    <input type="date" name="date" id="dateInput" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">CONTENT</label>
+                    <textarea name="content" id="contentInput" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noteImage">PHOTOS/VIDEOS:</label>
+                    <input type="file" name="noteImage" id="noteImageInput" accept="image/*,video/*" onchange="previewFile()">
+                </div>
+
+                <button type="submit">Upload</button>
+            </form>
+
+            <a href="/" class="back-button">Back to Gallery</a>
+            <a href="/notes" class="back-button">Notes</a>
+        </div>
+
+        <div class="preview-container">
+            <h2>Preview</h2>
+            <div id="file-preview">
+                <p>No file chosen</p>
+            </div>
+            <div class="preview-title" id="previewTitle">Title:</div>
+            <div class="preview-date" id="previewDate">Date:</div>
+            <div class="preview-content" id="previewContent">Content:</div>
+        </div>
+    </div>
+
+    <script>
+        // Dark Mode Toggle Functionality
+        const toggleDarkMode = () => {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            localStorage.setItem('darkModePreference', isDarkMode ? 'enabled' : 'disabled');
+        };
+
+        // Apply saved dark mode preference
+        window.onload = () => {
+            const darkModePreference = localStorage.getItem('darkModePreference');
+            if (darkModePreference === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+        };
+
+        // Preview single file function
+        function previewFile() {
+            const input = document.getElementById('noteImageInput');
+            const preview = document.getElementById('file-preview');
+
+            // Clear previous content
+            preview.innerHTML = '';
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const mediaType = file.type.split('/')[0];
+                    const mediaElement = document.createElement(mediaType === 'image' ? 'img' : 'video');
+                    mediaElement.src = e.target.result;
+                    mediaElement.controls = true;
+                    preview.appendChild(mediaElement);
+                };
+
+                reader.readAsDataURL(file);
+                preview.style.display = 'flex';
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Live preview for title, date, and content
+        const titleInput = document.getElementById('titleInput');
+        const dateInput = document.getElementById('dateInput');
+        const contentInput = document.getElementById('contentInput');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewDate = document.getElementById('previewDate');
+        const previewContent = document.getElementById('previewContent');
+
+        titleInput.addEventListener('input', () => {
+            previewTitle.textContent = `Title: ${titleInput.value}`;
+        });
+
+        contentInput.addEventListener('input', () => {
+            previewContent.textContent = `Content: ${contentInput.value}`;
+        });
+
+        dateInput.addEventListener('input', () => {
+            previewDate.textContent = `Date: ${dateInput.value}`;
+        });
+    </script>
+</body>
+</html>
