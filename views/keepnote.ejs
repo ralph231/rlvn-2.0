@@ -5,31 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keep Notes</title>
     <link rel="stylesheet" href="/keepnote.css">
-    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Keep Notes</h1>
-
-        <!-- Button to Navigate to Note Upload Page -->
-        <div style="text-align: right; margin-bottom: 20px;">
-            <a href="/noteupload" class="upload-button">Create New Note</a>
+        <!-- Dark Mode Toggle Button with Smooth Icon Change -->
+        <div class="dark-mode-toggle-container">
+            <button class="dark-mode-toggle" id="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
         </div>
 
-        <!-- Notes Grid -->
+        <h1 class="page-title">Keep Notes</h1>
+
+        <!-- Floating Button to Navigate to Note Upload Page -->
+        <div class="floating-button-container">
+            <a href="/noteupload" class="upload-button">＋</a>
+        </div>
+
+        <!-- Notes Grid with 3D Effect -->
         <div class="notes-grid">
             <% notes.forEach(note => { %>
                 <div class="note-item">
                     <% if (note.imageUrl) { %>
-                        <img src="/uploads/<%= note.imageUrl %>" alt="Note Image" onclick="openFullscreenImage('/uploads/<%= note.imageUrl %>')">
+                        <div class="image-container">
+                            <img src="/uploads/<%= note.imageUrl %>" alt="Note Image" class="note-image" onclick="openFullscreenImage('/uploads/<%= note.imageUrl %>')">
+                        </div>
                     <% } %>
-                    <h2><%= note.title %></h2>
-                    <p><%= note.content %></p>
-                    <small><%= new Date(note.date).toLocaleDateString() %></small>
+                    <div class="note-text-content">
+                        <h2><%= note.title %></h2>
+                        <p><%= note.content %></p>
+                        <small><%= new Date(note.date).toLocaleDateString() %></small>
+                    </div>
 
-                    <!-- Delete Button for Each Note -->
-                    <form action="/notes/delete/<%= note._id %>" method="POST" style="margin-top: 10px;">
-                        <button type="submit" class="delete-button">Delete</button>
+                    <!-- Delete Button with Icon -->
+                    <form action="/notes/delete/<%= note._id %>" method="POST" class="delete-form">
+                        <button type="submit" class="delete-button">🗑</button>
                     </form>
                 </div>
             <% }) %>
@@ -43,6 +51,25 @@
     </div>
 
     <script>
+        // Dark Mode Toggle Functionality
+        function toggleDarkMode() {
+            const body = document.body;
+            const toggleButton = document.getElementById('dark-mode-toggle');
+            const isDarkMode = body.classList.toggle('dark-mode');
+            toggleButton.textContent = isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('darkModePreference', isDarkMode ? 'enabled' : 'disabled');
+        }
+
+        // Apply saved dark mode preference on load
+        window.onload = () => {
+            const darkModePreference = localStorage.getItem('darkModePreference');
+            if (darkModePreference === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').textContent = '☀️';
+            }
+        };
+
+        // Fullscreen image functionality
         function openFullscreenImage(imageUrl) {
             const modal = document.getElementById('fullscreen-modal');
             const fullscreenImg = document.getElementById('fullscreen-img');
@@ -57,3 +84,4 @@
     </script>
 </body>
 </html>
+

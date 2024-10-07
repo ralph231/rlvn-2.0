@@ -1,106 +1,129 @@
-/* keepnote.css */
-
+/* Light mode styles */
 body {
-    font-family: 'Montserrat', sans-serif; /* Use a modern font */
-    background-color: #f4f7f8; /* Light background */
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f7f8;
+    color: #333;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 40px auto;
+    padding: 30px;
     background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-h1 {
-    font-size: 2.5rem;
+.page-title {
+    font-size: 3rem;
     color: #333;
-    margin: 0 0 10px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 20px 0;
+    position: relative;
+    z-index: 10;
 }
 
 .upload-button {
-    padding: 12px 25px;
-    background-color: #007BFF; /* Bootstrap primary color */
+    width: 60px;
+    height: 60px;
+    background-color: #007BFF;
     color: #fff;
     text-decoration: none;
-    border-radius: 30px;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+    border-radius: 50%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
 }
 
 .upload-button:hover {
-    background-color: #0056b3; /* Darken on hover */
+    background-color: #0056b3;
+    box-shadow: 0 15px 35px rgba(0, 86, 179, 0.5);
 }
 
 .notes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
 }
 
 .note-item {
     background-color: #ffffff;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
 .note-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-.note-item img {
+.note-image {
     max-width: 100%;
-    height: auto; /* Ensure the image scales correctly */
-    border-radius: 10px;
-    margin-bottom: 15px;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
 }
 
-.note-item h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+.note-item:hover .note-image {
+    transform: scale(1.05);
+}
+
+.note-text-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     color: #333;
 }
 
-.note-item p {
-    font-size: 1rem;
-    color: #666;
+.note-text-content p {
+    font-size: 1.1rem;
+    color: #555;
 }
 
-.note-item small {
+.note-text-content small {
     display: block;
     margin-top: 10px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #999;
 }
 
+.delete-form {
+    margin-top: 15px;
+}
+
 .delete-button {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #dc3545; /* Bootstrap danger color */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .delete-button:hover {
-    background-color: #c82333; /* Darken on hover */
+    background-color: #c82333;
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.5);
 }
 
+/* Fullscreen Modal */
 .fullscreen-modal {
     display: none;
     position: fixed;
@@ -108,7 +131,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.85);
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -117,9 +140,10 @@ h1 {
 .fullscreen-content {
     max-width: 90%;
     max-height: 90%;
-    display: block;
     margin: auto;
-    object-fit: contain; /* Ensures the fullscreen image fits well */
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
 }
 
 .fullscreen-modal .close {
@@ -129,19 +153,76 @@ h1 {
     font-size: 40px;
     color: #fff;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-/* Make sure notes grid is responsive */
+.fullscreen-modal .close:hover {
+    color: #ff4545;
+}
+
+/* Dark Mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .note-item {
+    background-color: #2a2a2a;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .note-text-content h2,
+body.dark-mode .note-text-content p,
+body.dark-mode .note-text-content small {
+    color: #ffffff;
+}
+
+body.dark-mode .delete-button {
+    background-color: #ff4545;
+}
+
+body.dark-mode .upload-button {
+    background-color: #1e90ff;
+}
+
+body.dark-mode .fullscreen-modal {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    color: #007BFF;
+}
+
+/* Responsive styles */
 @media (max-width: 600px) {
     .notes-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 
     .note-item h2 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     .note-item p {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 }
