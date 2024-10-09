@@ -17,6 +17,7 @@ body {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     position: relative;
     transition: background-color 0.3s ease;
+    overflow: hidden; /* Prevent content from overflowing */
 }
 
 .page-title {
@@ -65,6 +66,10 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    overflow: hidden; /* Prevent content overflow */
+    max-height: 350px; /* Set a maximum height for the card */
+    display: flex;
+    flex-direction: column;
 }
 
 .note-item:hover {
@@ -88,11 +93,22 @@ body {
     font-size: 1.8rem;
     margin-bottom: 15px;
     color: #333;
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Prevent the text from taking more than one line */
+    max-width: 100%;
 }
 
 .note-text-content p {
     font-size: 1.1rem;
     color: #555;
+    word-wrap: break-word; /* Wrap long text to prevent overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: normal; /* Allow wrapping for description */
+    flex-grow: 1; /* Allows description to grow and take remaining space */
 }
 
 .note-text-content small {
@@ -106,21 +122,47 @@ body {
     margin-top: 15px;
 }
 
+/* Styles for Share and Embed buttons */
+.share-button,
+.embed-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make the buttons circular */
+    padding: 10px; /* Adjust padding for better fit */
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 40px; /* Set fixed width and height */
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.share-button:hover,
+.embed-button:hover {
+    background-color: #0056b3; /* Change hover color to a darker shade */
+    box-shadow: 0 8px 20px rgba(0, 86, 179, 0.5);
+}
+
+/* Delete Button */
 .delete-button {
     background-color: #dc3545;
     color: #fff;
     border: none;
-    padding: 10px 15px;
-    border-radius: 50px;
+    padding: 10px;
+    border-radius: 50%; /* Keep the delete button circular as well */
     font-size: 1rem;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.5);
 }
 
 /* Fullscreen Modal */
@@ -220,9 +262,11 @@ body.dark-mode .fullscreen-modal {
 
     .note-item h2 {
         font-size: 1.4rem;
+        white-space: normal; /* Allow text to wrap on smaller screens */
     }
 
     .note-item p {
         font-size: 1rem;
+        white-space: normal; /* Ensure description wraps on smaller screens */
     }
 }

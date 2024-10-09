@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keep Notes</title>
     <link rel="stylesheet" href="/keepnote.css">
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -13,7 +14,7 @@
             <button class="dark-mode-toggle" id="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
         </div>
 
-        <h1 class="page-title">Keep Notes</h1>
+        <h1 class="page-title">RLVN NOTES</h1>
 
         <!-- Floating Button to Navigate to Note Upload Page -->
         <div class="floating-button-container">
@@ -29,16 +30,33 @@
                             <img src="/uploads/<%= note.imageUrl %>" alt="Note Image" class="note-image" onclick="openFullscreenImage('/uploads/<%= note.imageUrl %>')">
                         </div>
                     <% } %>
+
+                    <!-- Check if the note contains a video file or URL -->
+                    <% if (note.videoUrl) { %>
+                        <div class="video-container">
+                            <video controls class="note-video">
+                                <source src="/uploads/<%= note.videoUrl %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    <% } %>
+
                     <div class="note-text-content">
                         <h2><%= note.title %></h2>
                         <p><%= note.content %></p>
                         <small><%= new Date(note.date).toLocaleDateString() %></small>
                     </div>
 
-                    <!-- Delete Button with Icon -->
-                    <form action="/notes/delete/<%= note._id %>" method="POST" class="delete-form">
-                        <button type="submit" class="delete-button">🗑</button>
-                    </form>
+                    <div class="button-container">
+                        <!-- Delete Button with Icon -->
+                        <form action="/notes/delete/<%= note._id %>" method="POST" class="delete-form">
+                            <button type="submit" class="delete-button">🗑</button>
+                        </form>
+                        <!-- Share Button -->
+                        <button class="share-button" onclick="shareNote('<%= note.title %>', '<%= note.content %>', '<%= note._id %>')">🔗</button>
+                        <!-- Embed Button -->
+                        <button class="embed-button" onclick="embedNote('<%= note._id %>')">📦</button>
+                    </div>
                 </div>
             <% }) %>
         </div>
@@ -81,7 +99,79 @@
             const modal = document.getElementById('fullscreen-modal');
             modal.style.display = 'none';
         }
+
+        // Share note functionality
+        function shareNote(title, content, noteId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: content,
+                    url: `/notes/${noteId}`
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(err => {
+                    console.error('Error sharing:', err);
+                });
+            } else {
+                // Fallback for browsers that do not support the Share API
+                alert(`Share this note URL: ${window.location.origin}/notes/${noteId}`);
+            }
+        }
+
+        // Embed note functionality
+        function embedNote(noteId) {
+            const embedCode = `<iframe src="${window.location.origin}/notes/${noteId}" frameborder="0" style="width: 100%; height: 500px;"></iframe>`;
+            const embedModal = document.createElement('div');
+            embedModal.style.position = 'fixed';
+            embedModal.style.top = '50%';
+            embedModal.style.left = '50%';
+            embedModal.style.transform = 'translate(-50%, -50%)';
+            embedModal.style.background = '#fff';
+            embedModal.style.padding = '20px';
+            embedModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+            embedModal.style.zIndex = '1000';
+
+            embedModal.innerHTML = `
+                <h3>Embed Code</h3>
+                <textarea style="width: 100%; height: 100px;">${embedCode}</textarea>
+                <button onclick="this.parentElement.remove()">Close</button>
+            `;
+            document.body.appendChild(embedModal);
+        }
     </script>
+
+    <style>
+        /* Add this CSS to position the buttons */
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between buttons */
+        }
+
+        .share-button, .embed-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .share-button:hover, .embed-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+        /* Video styles */
+        .video-container {
+            margin-bottom: 20px;
+        }
+
+        .note-video {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </body>
 </html>
-
