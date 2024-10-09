@@ -52,10 +52,8 @@
                         <form action="/notes/delete/<%= note._id %>" method="POST" class="delete-form">
                             <button type="submit" class="delete-button">🗑</button>
                         </form>
-                        <!-- Share Button -->
-                        <button class="share-button" onclick="shareNote('<%= note.title %>', '<%= note.content %>', '<%= note._id %>')">🔗</button>
-                        <!-- Embed Button -->
-                        <button class="embed-button" onclick="embedNote('<%= note._id %>')">📦</button>
+                        <!-- Share Button removed -->
+                        <!-- Embed Button removed -->
                     </div>
                 </div>
             <% }) %>
@@ -99,45 +97,6 @@
             const modal = document.getElementById('fullscreen-modal');
             modal.style.display = 'none';
         }
-
-        // Share note functionality
-        function shareNote(title, content, noteId) {
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    text: content,
-                    url: `/notes/${noteId}`
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                }).catch(err => {
-                    console.error('Error sharing:', err);
-                });
-            } else {
-                // Fallback for browsers that do not support the Share API
-                alert(`Share this note URL: ${window.location.origin}/notes/${noteId}`);
-            }
-        }
-
-        // Embed note functionality
-        function embedNote(noteId) {
-            const embedCode = `<iframe src="${window.location.origin}/notes/${noteId}" frameborder="0" style="width: 100%; height: 500px;"></iframe>`;
-            const embedModal = document.createElement('div');
-            embedModal.style.position = 'fixed';
-            embedModal.style.top = '50%';
-            embedModal.style.left = '50%';
-            embedModal.style.transform = 'translate(-50%, -50%)';
-            embedModal.style.background = '#fff';
-            embedModal.style.padding = '20px';
-            embedModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-            embedModal.style.zIndex = '1000';
-
-            embedModal.innerHTML = `
-                <h3>Embed Code</h3>
-                <textarea style="width: 100%; height: 100px;">${embedCode}</textarea>
-                <button onclick="this.parentElement.remove()">Close</button>
-            `;
-            document.body.appendChild(embedModal);
-        }
     </script>
 
     <style>
@@ -148,8 +107,8 @@
             gap: 5px; /* Space between buttons */
         }
 
-        .share-button, .embed-button {
-            background-color: #007BFF;
+        .delete-button {
+            background-color: #ff4d4d;
             color: white;
             border: none;
             border-radius: 5px;
@@ -157,8 +116,8 @@
             cursor: pointer;
         }
 
-        .share-button:hover, .embed-button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
+        .delete-button:hover {
+            background-color: #e60000; /* Darker shade on hover */
         }
 
         /* Video styles */

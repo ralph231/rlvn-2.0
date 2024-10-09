@@ -62,7 +62,7 @@ body {
 .note-item {
     background-color: #ffffff;
     border-radius: 20px;
-    padding: 25px;
+    padding: 15px; /* Adjusted for better spacing */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
@@ -70,6 +70,7 @@ body {
     max-height: 350px; /* Set a maximum height for the card */
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Ensure space between image and text */
 }
 
 .note-item:hover {
@@ -78,48 +79,30 @@ body {
 }
 
 .note-image {
-    max-width: 100%;
-    height: auto;
+    width: 100%; /* Use 100% width to make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 150px; /* Set a maximum height for images */
+    object-fit: cover; /* Ensure the image covers the space without distortion */
     border-radius: 15px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
+    margin-bottom: 10px; /* Space between image and text */
 }
 
-.note-item:hover .note-image {
-    transform: scale(1.05);
+.note-text-content {
+    position: relative; /* Ensure proper stacking */
 }
 
 .note-text-content h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    font-size: 1.5rem; /* Adjusted size for better fit */
+    margin: 10px 0; /* Adjust margin */
     color: #333;
     word-wrap: break-word; /* Break long words to prevent overflow */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; /* Prevent the text from taking more than one line */
-    max-width: 100%;
 }
 
 .note-text-content p {
-    font-size: 1.1rem;
+    font-size: 1rem; /* Adjusted for better readability */
     color: #555;
+    margin-bottom: 10px; /* Space below the paragraph */
     word-wrap: break-word; /* Wrap long text to prevent overflow */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    white-space: normal; /* Allow wrapping for description */
-    flex-grow: 1; /* Allows description to grow and take remaining space */
-}
-
-.note-text-content small {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: #999;
-}
-
-.delete-form {
-    margin-top: 15px;
 }
 
 /* Styles for Share and Embed buttons */

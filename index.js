@@ -179,9 +179,6 @@ app.get('/notes', async (req, res) => {
 });
 
 app.post('/notes', upload.single('noteImage'), async (req, res) => {
-    console.log(req.body); // Check the fields coming through
-    console.log(req.file); // Check the file object
-
     try {
         const { title, content, date } = req.body;
         const imageUrl = req.file ? req.file.filename : null;
@@ -206,6 +203,21 @@ app.post('/notes', upload.single('noteImage'), async (req, res) => {
 // Route for note upload page
 app.get('/noteupload', (req, res) => {
     res.render('noteupload');
+});
+
+// Route to view a single note by ID
+app.get('/notes/:id', async (req, res) => {
+    try {
+        const note = await Note.findById(req.params.id);
+        if (!note) {
+            return res.status(404).send('Note not found');
+        }
+        res.render('noteDetail', { note });
+    } catch (error) {
+        console.error('Error fetching note:', error);
+        req.flash('error_msg', 'Error fetching note');
+        res.redirect('/notes');
+    }
 });
 
 // Consolidated route to delete a note by ID

@@ -37,12 +37,4 @@ if (urlParams.has('login')) {
             showLoginNotification("Incorrect username and password. Please try again.", 'error');
             break;
     }
-}
-
-// Display flash messages if they exist
-<% if (success_msg) { %>
-    showLoginNotification("<%= success_msg %>", 'success');
-<% } %>
-<% if (error_msg) { %>
-    showLoginNotification("<%= error_msg %>", 'error');
-<% } %>
+}                    
